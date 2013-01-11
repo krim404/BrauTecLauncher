@@ -38,6 +38,7 @@ public class GameLauncher implements Runnable
                         + File.separator + "bin" + File.separator;
                 final File dir = new File(path);
                 updateClassPath(dir);
+                
                 runGame();
             }
         }
@@ -120,22 +121,52 @@ public class GameLauncher implements Runnable
         }
     }
     
+    @SuppressWarnings("unchecked")
+	public static Class<? super Object> getClass(ClassLoader loader, String... classNames)
+    {
+        for (String className : classNames)
+        {
+            try
+            {
+                return (Class<? super Object>) Class.forName(className, false, loader);
+            }
+            catch (Exception e)
+            {
+                System.out.println("ERROR");
+            }
+        }
+		return null;
+    }
+    
     public void runGame()
     {
-        launcher.setState(State.DONE);
-        launcher.setPercentage(100);
+    	final Thread t = new Thread(this);
+        t.start();
         
+	    launcher.setState(State.DONE);
+        launcher.setPercentage(100);
+         
         wrapper = new Wrapper(launcherFrame);
         wrapper.init();
         if (wrapper.createApplet())
         {
             MCLogger.info("Start game.");
             
-            if (System.getenv("debugMode") == null || true)
+
+            if (System.getenv("debugMode") == null)
             {
                 launcher.replace(wrapper.getApplet());
             }
+            
+            String launcherClassName = System.getProperty("minecraft.applet.WrapperClass", "net.minecraft.Launcher");
+            Class<? super Object> launcherClass = this.getClass(getClass().getClassLoader(), launcherClassName);
+            if (launcherClass.isInstance(launcher))
+            {
+            	System.out.println("WORKS");
+            }
         }
+        
+        
     }
     
     public Applet createApplet() throws ClassNotFoundException,

@@ -461,4 +461,20 @@ public class Launcher extends Applet implements Runnable, AppletStub,
         return state;
     }
     
+    public Map<String, String> getParams()
+    {
+        return customParameters;
+    }
+    
+    public Applet getApplet()
+    {
+        return applet;
+    }
+    
+    public int getContext()
+    {
+        return context;
+    }
+    
+    
 }
