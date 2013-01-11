@@ -231,6 +231,9 @@ public class Launcher extends Applet implements Runnable, AppletStub,
     
     public void replace(Applet applet)
     {
+    	this.stop();
+    	this.destroy();
+    	
         this.applet = applet;
         applet.setStub(this);
         applet.setSize(getWidth(), getHeight());

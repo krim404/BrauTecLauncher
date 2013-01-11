@@ -139,30 +139,22 @@ public class GameLauncher implements Runnable
     }
     
     public void runGame()
-    {
-    	final Thread t = new Thread(this);
-        t.start();
-        
+    {   
 	    launcher.setState(State.DONE);
         launcher.setPercentage(100);
          
+        //FML Adapt
+        System.setProperty("minecraft.applet.WrapperClass",launcher.getClass().getName());
+        System.out.println("[MCLauncher] Setting WrapperClass to: "+launcher.getClass().getName());
+        
         wrapper = new Wrapper(launcherFrame);
         wrapper.init();
         if (wrapper.createApplet())
         {
             MCLogger.info("Start game.");
-            
-
             if (System.getenv("debugMode") == null)
             {
                 launcher.replace(wrapper.getApplet());
-            }
-            
-            String launcherClassName = System.getProperty("minecraft.applet.WrapperClass", "net.minecraft.Launcher");
-            Class<? super Object> launcherClass = this.getClass(getClass().getClassLoader(), launcherClassName);
-            if (launcherClass.isInstance(launcher))
-            {
-            	System.out.println("WORKS");
             }
         }
         

@@ -67,10 +67,7 @@ public class LauncherFrame extends Frame
                 "launcher.langs"));
         
         this.modsel = new File(Utils.getPrimWorkingDirectory(this),"modselect");
-        
-        //FML Adapt
-        System.setProperty("minecraft.applet.WrapperClass","com.kokakiwi.mclauncher.core.Launcher");
-                
+                        
         setTitle(getConfig().getString("launcher.windowTitle"));
         if (SystemUtils.getSystemOS() == SystemUtils.OS.macosx)
         {
