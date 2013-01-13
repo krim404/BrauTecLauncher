@@ -153,7 +153,7 @@ public class GameLauncher implements Runnable
         {
             MCLogger.info("Start game.");
             if (System.getenv("debugMode") == null)
-            {
+            {   
                 launcher.replace(wrapper.getApplet());
             }
         }
